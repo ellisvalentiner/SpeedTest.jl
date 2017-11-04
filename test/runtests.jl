@@ -1,5 +1,7 @@
 using SpeedTest
 using Base.Test
 
-# write your own tests here
-@test 1 == 2
+@test_skip get_ndt_servers
+@test_skip run_test
+@test_skip parse_speeds
+@test_skip speed_test
