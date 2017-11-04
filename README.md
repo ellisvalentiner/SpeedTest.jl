@@ -25,7 +25,7 @@ brew install web100clt
 On linux:
 
 ```bash
-apt-get update && apt-get install -y git automake gcc make libssl-dev libjansson-dev python
+apt update && apt install -y git automake gcc make libssl-dev libjansson-dev python
 git clone --recursive https://github.com/ndt-project/ndt
 cd ndt/I2util && ./bootstrap.sh && ./configure && make && make install
 cd ndt && ./bootstrap && ./configure && make
