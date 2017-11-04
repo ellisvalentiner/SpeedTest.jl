@@ -14,7 +14,7 @@ This package facilitates network performance tests (i.e. speed tests) using Netw
 
 ## Installation
 
-This package *requires* web100clt, the [NDT]() client command line utility.
+This package **requires** web100clt, the [NDT]() client command line utility.
 
 On macOS:
 
