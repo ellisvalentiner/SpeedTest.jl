@@ -10,11 +10,11 @@ Run network speed tests from Julia.
 
 ## Overview
 
-This package facilitates network performance tests (i.e. speed tests) using Network Diagnostic Tool (NDT) servers.
+This package facilitates network performance tests (i.e. speed tests) using the [Network Diagnostic Tool (NDT)](https://github.com/ndt-project/ndt/) and [Measurement Lab](https://www.measurementlab.net/) servers.
 
 ## Installation
 
-This package **requires** web100clt, the [NDT](https://github.com/ndt-project/ndt) client command line utility.
+This package **requires** web100clt, a part of the NDT client command line utility.
 
 On macOS:
 
@@ -54,6 +54,20 @@ nearest_server = get_ndt_servers(policy="nearest")
 server_name = nearest_server["fqdn"]
 raw = run_test(server_name)
 print(raw)
+# Testing network path for configuration and performance problems  --  Using IPv4 address
+# Checking for Middleboxes . . . . . . . . . . . . . . . . . .  Done
+# checking for firewalls . . . . . . . . . . . . . . . . . . .  Done
+# running 10s outbound test (client to server) . . . . .  11.63 Mb/s
+# running 10s inbound test (server to client) . . . . . . 4.49 Mb/s
+# sending meta information to server . . . . . Done
+# The slowest link in the end-to-end path is a 10 Mbps Ethernet or WiFi 11b subnet
+# Information: Other network traffic is congesting the link
+# Server 'ndt.iupui.mlab1.ord04.measurement-lab.org' is not behind a firewall. [Connection to the ephemeral port was successful]
+# Client is probably behind a firewall. [Connection to the ephemeral port failed]
+# Packet size is preserved End-to-End
+# Server IP addresses are preserved End-to-End
+# Information: Network Address Translation (NAT) box is modifying the Client's IP address
+# 	Server says [68.51.212.235] but Client says [ 10.0.1.5]
 ```
 
 or more simply
@@ -62,4 +76,8 @@ or more simply
 using SpeedTest
 
 speed_test()
+# Dict{String,Any} with 3 entries:
+#   "upload"    => 11.73
+#   "download"  => 87.19
+#   "timestamp" => 2017-11-04T17:31:06.93
 ```
