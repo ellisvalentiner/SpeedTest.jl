@@ -10,7 +10,7 @@ Run network speed tests from Julia.
 
 ## Overview
 
-This package facilitates network performance tests (i.e. speed tests) using Network Diagnostic Test (NDT) servers.
+This package facilitates network performance tests (i.e. speed tests) using Network Diagnostic Tool (NDT) servers.
 
 ## Installation
 
