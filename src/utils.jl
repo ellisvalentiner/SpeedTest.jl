@@ -26,8 +26,8 @@ end
 """
 
 """
-function speed_test(;server_name::String=nothing)
-  if server_name === nothing
+function speed_test(;server_name::String="")
+  if server_name !== ""
     nearest_server = get_ndt_servers(policy="nearest")
     server_name = nearest_server["fqdn"]
   end
