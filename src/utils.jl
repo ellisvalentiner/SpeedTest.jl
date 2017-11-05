@@ -34,5 +34,5 @@ function speed_test(;server_name::String="")
   timestamp = now()
   raw = run_test(server_name)
   speeds = parse_speeds(raw)
-  return Dict("timestamp"=>timestamp, "upload"=>speeds[1], "download"=>speeds[2])
+  return Dict("timestamp"=>timestamp, "upload"=>speeds[1], "download"=>speeds[2], "response"=>raw)
 end
