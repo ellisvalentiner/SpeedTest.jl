@@ -2,8 +2,8 @@
 """
 Identify NDT servers
 """
-function get_ndt_servers(; policy::String="nearest")
-  @assert in(policy, ["nearest", "all", "random"])
+function get_ndt_servers(; policy::String="geo", metro::String="", ip::String="", address_family::String="ipv4", country::String="", city::String="")
+  @assert in(policy, ["geo", "random", "metro", "country", "all"])
   resp = Requests.get("https://mlab-ns.appspot.com/ndt"; query=Dict("policy"=>policy))
   Requests.json(resp)
 end
@@ -34,9 +34,9 @@ end
 """
 
 """
-function speedtest(;server_name::String="", policy::String="nearest")
+function speedtest(;server_name::String="", policy::String="geo", kwargs...)
   if server_name !== ""
-    serverinfo = get_ndt_servers(policy=policy)
+    serverinfo = get_ndt_servers(policy=policy, kwargs...)
     servername = serverinfo["fqdn"]
   end
   timestamp = now()
@@ -45,7 +45,7 @@ function speedtest(;server_name::String="", policy::String="nearest")
   if length(speeds) == 2
     output = Dict("timestamp"=>timestamp, "upload"=>speeds[1], "download"=>speeds[2], "serverinfo"=>serverinfo, "response"=>raw)
   else
-    output = Dict("timestamp"=>timestamp, "upload"=>nothing, "download"=>nothing, "serverinfo"=>serverinfo, "response"=>raw)
+    output = Dict("timestamp"=>timestamp, "upload"=>0, "download"=>0, "serverinfo"=>serverinfo, "response"=>raw)
   end
   return output
 end
