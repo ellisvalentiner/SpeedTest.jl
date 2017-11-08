@@ -1,0 +1,29 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "SpeedTest.jl\n\n\nRun network speed tests from Julia.\n\n\n\n\nOverview\n\n\nThis package facilitates network performance tests (i.e. speed tests) using the \nNetwork Diagnostic Tool (NDT)\n and \nMeasurement Lab\n servers.\n\n\n\n\nInstallation\n\n\nThis package \nrequires\n web100clt, a part of the NDT client command line utility.\n\n\nOn macOS:\n\n\nbrew install web100clt\n\n\n\n\nOn linux:\n\n\napt update \n apt install -y git automake gcc make libssl-dev libjansson-dev python\ngit clone --recursive https://github.com/ndt-project/ndt\ncd ndt/I2util \n ./bootstrap.sh \n ./configure \n make \n make install\ncd ndt \n ./bootstrap \n ./configure \n make\n\n\n\n\nPlease note that I cannot help you troubleshoot issues with NDT utilities.\n\n\n\n\nThen install this package as you would normally:\n\n\n# SpeedTest.jl is not currently registered as an official package\n# Please install the development version from GitHub:\nPkg.clone(\ngit://GitHub.com/ellisvalentiner/SpeedTest.jl\n)\n\n\n\n\nIf you encounter a clear bug, please file a minimal reproducible example on GitHub.\n\n\n\n\nUsage\n\n\nusing SpeedTest\n\nnearest_server = get_ndt_servers(policy=\nnearest\n)\nserver_name = nearest_server[\nfqdn\n]\nraw = run_test(server_name)\nprint(raw)\n# Testing network path for configuration and performance problems  --  Using IPv4 address\n# Checking for Middleboxes . . . . . . . . . . . . . . . . . .  Done\n# checking for firewalls . . . . . . . . . . . . . . . . . . .  Done\n# running 10s outbound test (client to server) . . . . .  11.63 Mb/s\n# running 10s inbound test (server to client) . . . . . . 4.49 Mb/s\n# sending meta information to server . . . . . Done\n# The slowest link in the end-to-end path is a 10 Mbps Ethernet or WiFi 11b subnet\n# Information: Other network traffic is congesting the link\n# Server 'ndt.iupui.mlab1.ord04.measurement-lab.org' is not behind a firewall. [Connection to the ephemeral port was successful]\n# Client is probably behind a firewall. [Connection to the ephemeral port failed]\n# Packet size is preserved End-to-End\n# Server IP addresses are preserved End-to-End\n# Information: Network Address Translation (NAT) box is modifying the Client's IP address\n#   Server says [68.51.212.235] but Client says [ 10.0.1.5]\n\n\n\n\nor more simply\n\n\nusing SpeedTest\n\nspeed_test()\n# Dict{String,Any} with 3 entries:\n#   \nupload\n    =\n 11.73\n#   \ndownload\n  =\n 87.19\n#   \ntimestamp\n =\n 2017-11-04T17:31:06.93", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#speedtestjl", 
+            "text": "Run network speed tests from Julia.", 
+            "title": "SpeedTest.jl"
+        }, 
+        {
+            "location": "/#overview", 
+            "text": "This package facilitates network performance tests (i.e. speed tests) using the  Network Diagnostic Tool (NDT)  and  Measurement Lab  servers.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/#installation", 
+            "text": "This package  requires  web100clt, a part of the NDT client command line utility.  On macOS:  brew install web100clt  On linux:  apt update   apt install -y git automake gcc make libssl-dev libjansson-dev python\ngit clone --recursive https://github.com/ndt-project/ndt\ncd ndt/I2util   ./bootstrap.sh   ./configure   make   make install\ncd ndt   ./bootstrap   ./configure   make  Please note that I cannot help you troubleshoot issues with NDT utilities.   Then install this package as you would normally:  # SpeedTest.jl is not currently registered as an official package\n# Please install the development version from GitHub:\nPkg.clone( git://GitHub.com/ellisvalentiner/SpeedTest.jl )  If you encounter a clear bug, please file a minimal reproducible example on GitHub.", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/#usage", 
+            "text": "using SpeedTest\n\nnearest_server = get_ndt_servers(policy= nearest )\nserver_name = nearest_server[ fqdn ]\nraw = run_test(server_name)\nprint(raw)\n# Testing network path for configuration and performance problems  --  Using IPv4 address\n# Checking for Middleboxes . . . . . . . . . . . . . . . . . .  Done\n# checking for firewalls . . . . . . . . . . . . . . . . . . .  Done\n# running 10s outbound test (client to server) . . . . .  11.63 Mb/s\n# running 10s inbound test (server to client) . . . . . . 4.49 Mb/s\n# sending meta information to server . . . . . Done\n# The slowest link in the end-to-end path is a 10 Mbps Ethernet or WiFi 11b subnet\n# Information: Other network traffic is congesting the link\n# Server 'ndt.iupui.mlab1.ord04.measurement-lab.org' is not behind a firewall. [Connection to the ephemeral port was successful]\n# Client is probably behind a firewall. [Connection to the ephemeral port failed]\n# Packet size is preserved End-to-End\n# Server IP addresses are preserved End-to-End\n# Information: Network Address Translation (NAT) box is modifying the Client's IP address\n#   Server says [68.51.212.235] but Client says [ 10.0.1.5]  or more simply  using SpeedTest\n\nspeed_test()\n# Dict{String,Any} with 3 entries:\n#    upload     =  11.73\n#    download   =  87.19\n#    timestamp  =  2017-11-04T17:31:06.93", 
+            "title": "Usage"
+        }
+    ]
+}

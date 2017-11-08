@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Run network speed tests from Julia.">
+  <meta name="author" content="Ellis Valentiner">
+  <link rel="shortcut icon" href="./img/favicon.ico">
+  <title>Home - SpeedTest.jl</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+  <link href="./assets/Documenter.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> SpeedTest.jl</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href=".">Home</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#speedtestjl">SpeedTest.jl</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#overview">Overview</a></li>
+        
+            <li><a class="toctree-l3" href="#installation">Installation</a></li>
+        
+            <li><a class="toctree-l3" href="#usage">Usage</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">SpeedTest.jl</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/ellisvalentiner/SpeedTest.jl/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><a id='SpeedTest.jl-1'></a></p>
+<h1 id="speedtestjl">SpeedTest.jl</h1>
+<p>Run network speed tests from Julia.</p>
+<p><a id='Overview-1'></a></p>
+<h2 id="overview">Overview</h2>
+<p>This package facilitates network performance tests (i.e. speed tests) using the <a href="https://github.com/ndt-project/ndt/">Network Diagnostic Tool (NDT)</a> and <a href="https://www.measurementlab.net/">Measurement Lab</a> servers.</p>
+<p><a id='Installation-1'></a></p>
+<h2 id="installation">Installation</h2>
+<p>This package <strong>requires</strong> web100clt, a part of the NDT client command line utility.</p>
+<p>On macOS:</p>
+<pre><code class="bash">brew install web100clt
+</code></pre>
+
+<p>On linux:</p>
+<pre><code class="bash">apt update &amp;&amp; apt install -y git automake gcc make libssl-dev libjansson-dev python
+git clone --recursive https://github.com/ndt-project/ndt
+cd ndt/I2util &amp;&amp; ./bootstrap.sh &amp;&amp; ./configure &amp;&amp; make &amp;&amp; make install
+cd ndt &amp;&amp; ./bootstrap &amp;&amp; ./configure &amp;&amp; make
+</code></pre>
+
+<p>Please note that I cannot help you troubleshoot issues with NDT utilities.</p>
+<hr />
+<p>Then install this package as you would normally:</p>
+<pre><code class="julia"># SpeedTest.jl is not currently registered as an official package
+# Please install the development version from GitHub:
+Pkg.clone(&quot;git://GitHub.com/ellisvalentiner/SpeedTest.jl&quot;)
+</code></pre>
+
+<p>If you encounter a clear bug, please file a minimal reproducible example on GitHub.</p>
+<p><a id='Usage-1'></a></p>
+<h2 id="usage">Usage</h2>
+<pre><code class="julia">using SpeedTest
+
+nearest_server = get_ndt_servers(policy=&quot;nearest&quot;)
+server_name = nearest_server[&quot;fqdn&quot;]
+raw = run_test(server_name)
+print(raw)
+# Testing network path for configuration and performance problems  --  Using IPv4 address
+# Checking for Middleboxes . . . . . . . . . . . . . . . . . .  Done
+# checking for firewalls . . . . . . . . . . . . . . . . . . .  Done
+# running 10s outbound test (client to server) . . . . .  11.63 Mb/s
+# running 10s inbound test (server to client) . . . . . . 4.49 Mb/s
+# sending meta information to server . . . . . Done
+# The slowest link in the end-to-end path is a 10 Mbps Ethernet or WiFi 11b subnet
+# Information: Other network traffic is congesting the link
+# Server 'ndt.iupui.mlab1.ord04.measurement-lab.org' is not behind a firewall. [Connection to the ephemeral port was successful]
+# Client is probably behind a firewall. [Connection to the ephemeral port failed]
+# Packet size is preserved End-to-End
+# Server IP addresses are preserved End-to-End
+# Information: Network Address Translation (NAT) box is modifying the Client's IP address
+#   Server says [68.51.212.235] but Client says [ 10.0.1.5]
+</code></pre>
+
+<p>or more simply</p>
+<pre><code class="julia">using SpeedTest
+
+speed_test()
+# Dict{String,Any} with 3 entries:
+#   &quot;upload&quot;    =&gt; 11.73
+#   &quot;download&quot;  =&gt; 87.19
+#   &quot;timestamp&quot; =&gt; 2017-11-04T17:31:06.93
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/ellisvalentiner/SpeedTest.jl/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="./js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+      <script src="./assets/mathjaxhelper.js"></script>
+      <script src="./search/require.js"></script>
+      <script src="./search/search.js"></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.17.1
+Build Date UTC : 2017-11-08 23:19:17
+-->
