@@ -3,7 +3,7 @@
 Identify NDT servers
 """
 function get_ndt_servers(; policy::String="nearest")
-  @assert in(policy, ["nearest", "all"])
+  @assert in(policy, ["nearest", "all", "random"])
   resp = Requests.get("https://mlab-ns.appspot.com/ndt"; query=Dict("policy"=>policy))
   Requests.json(resp)
 end
@@ -19,20 +19,33 @@ end
 Parse web100clt output
 """
 function parse_speeds(output::String)
-  speed = collect(Iterators.flatten(matchall.(r"\d+.\d+", matchall(r"\d+.\d+ Mb/s", output))))
-  return float.(speed)
+  x = matchall(r"\d+.\d+ [Mb/s|kb/s]", output)
+  speed = Array{Float64,1}()
+  for i in 1:length(x)
+    if ismatch(r" k", x[i])
+      append!(speed, 0.001 * float(matchall(r"\d+.\d+", x[i])))
+    else
+      append!(speed, float(matchall(r"\d+.\d+", x[i])))
+    end
+  end
+  return speed
 end
 
 """
 
 """
-function speed_test(;server_name::String="")
+function speedtest(;server_name::String="", policy::String="nearest")
   if server_name !== ""
-    nearest_server = get_ndt_servers(policy="nearest")
-    server_name = nearest_server["fqdn"]
+    serverinfo = get_ndt_servers(policy=policy)
+    servername = serverinfo["fqdn"]
   end
   timestamp = now()
-  raw = run_test(server_name)
+  raw = run_test(servername)
   speeds = parse_speeds(raw)
-  return Dict("timestamp"=>timestamp, "upload"=>speeds[1], "download"=>speeds[2], "response"=>raw)
+  if length(speeds) == 2
+    output = Dict("timestamp"=>timestamp, "upload"=>speeds[1], "download"=>speeds[2], "serverinfo"=>serverinfo, "response"=>raw)
+  else
+    output = Dict("timestamp"=>timestamp, "upload"=>nothing, "download"=>nothing, "serverinfo"=>serverinfo, "response"=>raw)
+  end
+  return output
 end
