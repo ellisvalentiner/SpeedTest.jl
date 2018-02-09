@@ -79,9 +79,11 @@ or more simply
 ```julia
 using SpeedTest
 
-speed_test()
-# Dict{String,Any} with 3 entries:
-#   "upload"    => 11.73
-#   "download"  => 87.19
-#   "timestamp" => 2017-11-04T17:31:06.93
+speedtest()
+# Dict{String,Any} with 5 entries:
+#   "serverinfo" => Dict{String,Any}(Pair{String,Any}("city", "Chicago_IL"),Pair{String,Any}("ip", Any["66.198.24.75"]),Pair{String,Any}("fqdn", "ndt.iupui.mla…
+#   "response"   => "Testing network path for configuration and performance problems  --  Using IPv4 address\nChecking for Middleboxes . . . . . . . . . . . . …
+#   "upload"     => 11.32
+#   "download"   => 108.65
+#   "timestamp"  => 2018-02-09T10:52:29.043
 ```
